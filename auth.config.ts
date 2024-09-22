@@ -1,8 +1,9 @@
 import { NextAuthConfig } from "next-auth";
 import { Provider } from "next-auth/providers";
 import GitHub from "next-auth/providers/github";
+import google from "next-auth/providers/google";
 
-const providers: Provider[] = [GitHub];
+const providers: Provider[] = [GitHub, google];
 
 export const providerMap = providers
   .map((provider) => {
