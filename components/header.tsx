@@ -72,6 +72,12 @@ export default async function Header() {
           >
             Top Artists
           </Link>
+          <Link
+            href="/community/create"
+            className="hidden lg:inline-block hover:text-gray-300"
+          >
+            コミュニティ作成
+          </Link>
 
           {session?.user ? (
             <DropdownMenu>
