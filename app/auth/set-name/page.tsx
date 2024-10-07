@@ -1,79 +1,82 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { SessionProvider, signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { setName } from "@/app/actions/profile";
+import ClientSetName from "@/components/client-set-name";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-export default function SignIn() {
-  const [name, setName] = useState("");
-  const { data: session, update } = useSession();
-  const router = useRouter();
+type UpdateInputs = {
+  name: string;
+};
 
-  console.log(session);
+export default function SetNamePage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UpdateInputs>();
 
-  useEffect(() => {
-    if (session && !session.user.isNewUser) {
-      router.push("/");
-    }
-  }, [session, router]);
+  const onSubmit: SubmitHandler<UpdateInputs> = async (data) => {
+    setIsLoading(true);
+    setSubmitError(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const response = await fetch("/api/user/update-name", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name }),
-    });
-
-    if (response.ok) {
-      await update({ name: name });
-      router.push("/");
-    } else {
-      alert("名前の更新に失敗しました");
+    try {
+      const result = await setName(data.name);
+      if (result.success && result.name) {
+      }
+      // navigate("/");
+    } catch (error) {
+      console.error("Update Failed: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (!session || !session.user.isNewUser) return <div>No session</div>;
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            名前を設定して
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="名前を入力"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-          </div>
+    // <div className="flex w-full min-h-screen items-center justify-center bg-gray-100">
+    //   <div className="w-full max-w-md space-y-8">
+    //     <div>
+    //       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+    //         名前を設定して
+    //       </h2>
+    //     </div>
+    //     <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    //       <input type="hidden" name="remember" defaultValue="true" />
+    //       <div className="rounded-md  -space-y-px">
+    //         <div>
+    //           <label htmlFor="name" className="sr-only">
+    //             Name
+    //           </label>
+    //           <input
+    //             id="name"
+    //             className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+    //             placeholder="名前を入力"
+    //             {...register("name", {
+    //               required: "名前を入力してください",
+    //             })}
+    //           />
+    //           {errors.name && (
+    //             <span className="text-red-500 text-xs mt-1">
+    //               {errors.name.message}
+    //             </span>
+    //           )}
+    //         </div>
+    //       </div>
 
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              名前を設定
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    //       <div>
+    //         <button
+    //           type="submit"
+    //           disabled={isLoading}
+    //           className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:cursor-not-allowed"
+    //         >
+    //           {isLoading ? "送信中..." : "名前を設定"}
+    //         </button>
+    //       </div>
+    //     </form>
+    //   </div>
+    // </div>
+    <ClientSetName />
   );
 }

@@ -10,7 +10,7 @@ import { Skeleton } from "./ui/skeleton";
 
 type TimeLinePostFormProps = {
   onSubmit: (content: string) => Promise<void>;
-  image: string;
+  image?: string | null;
   isSignedIn: boolean;
   isJoined: boolean;
 };

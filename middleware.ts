@@ -3,7 +3,6 @@
 
 // export const { auth: middleware }  = NextAuth(authConfig)
 
-// middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
@@ -20,16 +19,26 @@ export async function middleware(request: NextRequest) {
 
   // console.log("token", token);
 
-  // /auth/set-nameへのアクセスは常に許可
-  if (request.nextUrl.pathname === "/auth/set-name") {
-    return NextResponse.next();
-  }
-
-  // ユーザーがサインインしていて、isNewUserがtrueの場合、name設定ページにリダイレクト
-  if (token && token.isNewUser === true) {
-    // 現在のURLが/auth/set-name出ない場合のみリダイレクト
-    if (request.nextUrl.pathname !== "/auth/set-name") {
-      return NextResponse.redirect(new URL("/auth/set-name", request.url));
+  if (token) {
+    // ユーザーがサインイン済み
+    if (token.isProfileComplete === false) {
+      // 名前を設定していない場合、set-nameにリダイレクト
+      if (request.nextUrl.pathname !== "/auth/set-name") {
+        console.log("set-nameにリダイレクト");
+        return NextResponse.redirect(new URL("/auth/set-name", request.url));
+      }
+    } else {
+      // 名前が設定済みでset-nameにアクセスがきたときホームへリダイレクト
+      if (request.nextUrl.pathname === "/auth/set-name") {
+        console.log("名前を設定済みのため、ホームにリダイレクト");
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    }
+  } else {
+    // 未サインイン
+    if (request.nextUrl.pathname === "/auth/set-name") {
+      console.log("サインインしてないため、ホームにリダイレクト");
+      return NextResponse.redirect(new URL("/", request.url));
     }
   }
 

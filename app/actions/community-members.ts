@@ -7,6 +7,13 @@ export async function joinCommunity(communityId: string) {
   const session = await auth();
   const userId = session?.user.id;
 
+  if(!userId) {
+    return {
+      success: false,
+      error: "Not Authenticated"
+    }
+  } 
+
   try {
     const communityMember = await prisma.communityMember.create({
       data: { userId, communityId },

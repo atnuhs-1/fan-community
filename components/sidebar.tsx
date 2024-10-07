@@ -52,10 +52,6 @@ export default async function SideBar() {
         />
       </nav>
 
-      {/* <div className="p-4">
-        <Button className="w-full">ポストする</Button>
-      </div> */}
-
       <div className="mt-auto p-4">
         {session?.user ? (
           <DropdownMenu>
@@ -89,7 +85,7 @@ export default async function SideBar() {
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>
+                <span className="w-full">
                   <SignOut></SignOut>
                 </span>
               </DropdownMenuItem>

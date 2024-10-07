@@ -38,8 +38,9 @@ export default async function CommunityPage({
     const communityUserId = memberResult.members.map(member => {
       return member.userId
     })
-    isMember = communityUserId.includes(session?.user.id);
-
+    if(session) {
+      isMember = communityUserId.includes(session?.user.id);
+    }
   }
 
   

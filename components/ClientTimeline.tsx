@@ -27,7 +27,7 @@ type ClientTimelineProps = {
   communityId: string;
   isSignedIn: boolean;
   isMember: boolean;
-  image: string;
+  image?: string | null;
 };
 
 export default function ClientTimeline({
