@@ -19,14 +19,17 @@ export async function POST(req: NextRequest) {
   try {
     const updateUser = await prisma.user.update({
       where: {id: session.user.id},
-      data: {name: name},
+      data: {
+        name: name,
+        isProfileComplete: true,
+      },
     })
 
     // セッションを更新してisNewUserをfalseに設定　サーバー側のJWTを更新するためにいるらしい　よくわからん いらんかも
     // セッションの更新はauth()関数が自動的に処理するため、めいじてきなJWTの更新は不要になったらしい
 
     return NextResponse.json({message: "名前が更新されました", user: updateUser})
-  } catch ( error) {
-    
+  } catch ( error ) {
+    return  NextResponse.json({error: error}, {status: 400})
   }
 }

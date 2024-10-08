@@ -23,8 +23,9 @@ declare module "next-auth" {
   }
 }
 
-declare module "next-auth/adapters" {
-  interface AdapterUser {
-    isProfileComplete: boolean
+
+declare module "@auth/core/adapters" {
+  interface AdapterUser extends User {
+    isProfileComplete: boolean;
   }
 }
