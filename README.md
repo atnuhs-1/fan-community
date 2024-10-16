@@ -4,6 +4,7 @@
 https://fan-community.vercel.app/
 
 アプリ画面
+
 <img width="700" alt="あ" src="./docs/images/timeline.png">
 
 ##### 進捗
