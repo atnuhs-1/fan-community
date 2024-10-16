@@ -61,7 +61,7 @@ export default async function SideBar() {
         {user_info?.communities && (
           <div className="space-y-2">
             {user_info?.communities.map((community) => (
-              <NavButton icon={<Bell />} label={community.name} href={`/timeline/${community.id}`} />
+              <NavButton key={community.id} icon={<Bell />} label={community.name} href={`/timeline/${community.id}`} />
             ))}
           </div>
         )}
