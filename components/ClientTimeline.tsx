@@ -1,7 +1,7 @@
 "use client";
 
 import { Post } from "@/types/post";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import JoinCommunityButton from "./JoinCommunityButton";
 import CommunityMemberList from "./CommunityMemberList";
 import PostForm from "./PostForm";
@@ -81,24 +81,27 @@ export default function ClientTimeline({
         <header className="sticky top-0 bg-white border-b p-4">
           <h1 className="text-xl font-bold">タイムライン</h1>
         </header>
-        <div className="p-4 space-y-4">
+        <div className="space-y-4">
           <TimeLinePostForm
             onSubmit={handleNewPost}
             image={image}
             isSignedIn={isSignedIn}
             isJoined={isJoined}
           />
-
-          <div className="space-y-1">
-            {posts.map((post) => (
-              <PostItem key={post.id} post={post} />
-            ))}
-          </div>
+          <Suspense fallback={<div>loading</div>}>
+            <div className="">
+              {posts.map((post) => (
+                <PostItem key={post.id} post={post} />
+              ))}
+            </div>
+          </Suspense>
         </div>
       </main>
 
       <aside className="w-80 border-l flex flex-col p-4">
-        <div className={`space-y-4 ${isSignedIn && isJoined ? "flex-grow" : ""}`}>
+        <div
+          className={`space-y-4 ${isSignedIn && isJoined ? "flex-grow" : ""}`}
+        >
           <CommunityMemberList members={members} />
           <JoinCommunityButton
             communityId={communityId}
@@ -107,11 +110,11 @@ export default function ClientTimeline({
             handleJoin={handleJoin}
           />
         </div>
-        <PostForm
+        {/* <PostForm
           onSubmit={handleNewPost}
           isSignedIn={isSignedIn}
           isJoined={isJoined}
-        />
+        /> */}
       </aside>
 
       {/* <ClientPostList communityId={communityId}/> */}

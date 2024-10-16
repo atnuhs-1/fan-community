@@ -5,10 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Heart, MessageCircle, Repeat, Share2 } from "lucide-react";
 
-export default function PostList({ post }: { post: Post }) {
+export default function PostItem({ post }: { post: Post }) {
 
   return (
-    <div className="border-t hover:bg-gray-50 transition-colors duration-200 ease-in-out">
+    <div className="px-4 border-t hover:bg-gray-50 transition-colors duration-200 ease-in-out">
       <div className="flex space-x-4 pt-4 pb-3">
         <Avatar className="h-9 w-9 flex rounded-full">
           <AvatarImage

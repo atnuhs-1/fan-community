@@ -32,9 +32,15 @@ import { SignIn, SignOut } from "./auth-component";
 import { Button } from "./ui/button";
 import NavButton from "./NavButton";
 import React from "react";
+import { getUserProfile } from "@/app/actions/profile";
 
 export default async function SideBar() {
   const session = await auth();
+  let user_info;
+  if (session) {
+    user_info = await getUserProfile(session?.user.id);
+  }
+
   return (
     <aside className="w-64 border-r flex flex-col">
       <nav className="p-4 space-y-2 flex-grow">
@@ -50,6 +56,15 @@ export default async function SideBar() {
           label="コミュニティ作成"
           href="/community/create"
         />
+
+        <h2 className="px-4 pt-4 pb-1 font-bold border-b">タイムライン</h2>
+        {user_info?.communities && (
+          <div className="space-y-2">
+            {user_info?.communities.map((community) => (
+              <NavButton icon={<Bell />} label={community.name} href={`/timeline/${community.id}`} />
+            ))}
+          </div>
+        )}
       </nav>
 
       <div className="mt-auto p-4">
@@ -71,17 +86,23 @@ export default async function SideBar() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>アカウント</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>
-                  <Link href="/profile">プロフィール</Link>
-                </span>
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/profile"
+                  className="flex w-full items-center cursor-pointer"
+                >
+                  <User className="mr-2 h-4 w-4" />
+                  <span>プロフィール</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>
-                  <Link href="/#">アカウントを管理</Link>
-                </span>
+                <Link
+                  href="/#"
+                  className="flex w-full items-center cursor-pointer"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>アカウントを管理</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <LogOut className="mr-2 h-4 w-4" />

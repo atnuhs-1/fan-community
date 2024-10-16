@@ -38,7 +38,7 @@ export default function TimeLinePostForm({
 
   if (!(isSignedIn && isJoined)) {
     return (
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 p-4">
         <Skeleton className="h-9 w-9 mr-2 rounded-full" />
         <Skeleton className="h-9 w-full" />
       </div>
@@ -46,7 +46,7 @@ export default function TimeLinePostForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex  space-x-4">
+    <form onSubmit={handleSubmit} className="flex p-4 space-x-4">
       <Avatar className="h-9 w-9 mr-2 rounded-full">
         <AvatarImage src={image ?? "https://github.com/shadcn.png"} />
         <AvatarFallback>CN</AvatarFallback>
