@@ -75,7 +75,7 @@ model Community {
 
 model CommunityMember {
   id          String    @id @default(cuid())
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   community   Community @relation(fields: [communityId], references: [id])
   communityId String
@@ -90,7 +90,7 @@ model Post {
   content     String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
   community   Community @relation(fields: [communityId], references: [id])
   communityId String

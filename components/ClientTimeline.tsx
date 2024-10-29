@@ -100,7 +100,7 @@ export default function ClientTimeline({
 
       <aside className="w-80 border-l flex flex-col p-4">
         <div
-          className={`space-y-4 ${isSignedIn && isJoined ? "flex-grow" : ""}`}
+          className={`space-y-4 ${isSignedIn && isJoined ? "" : ""}`}
         >
           <CommunityMemberList members={members} />
           <JoinCommunityButton
@@ -109,6 +109,9 @@ export default function ClientTimeline({
             isJoined={isJoined}
             handleJoin={handleJoin}
           />
+        </div>
+        <div>
+          <h2 className="mt-4 font-bold text-2xl">ライブ情報</h2>
         </div>
         {/* <PostForm
           onSubmit={handleNewPost}

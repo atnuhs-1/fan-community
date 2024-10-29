@@ -1,8 +1,12 @@
+"use server"
+
 import { auth } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { prisma } from "@/db";
 import PostItem from "@/components/PostItem";
 import { getUserProfile } from "../actions/profile";
+import EditProfile from "@/components/EditProfile";
+
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -28,6 +32,7 @@ export default async function ProfilePage() {
             </div>
             <div className="mb-4">
               <p className="font-bold text-xl">{user_info?.name}</p>
+              <EditProfile userId={session?.user.id}/>
             </div>
           </div>
 
@@ -48,16 +53,13 @@ export default async function ProfilePage() {
           <h2>コミュニティ</h2>
           {user_info.communities ? (
             <div className="space-y-2">
-            {user_info?.communities.map((community) => (
-              <div key={community.name}>
-                {community.name}
-              </div>
-            ))}
-          </div>
-          ): (
+              {user_info?.communities.map((community) => (
+                <div key={community.name}>{community.name}</div>
+              ))}
+            </div>
+          ) : (
             <>コミュニティ</>
           )}
-          
         </div>
       </aside>
     </>

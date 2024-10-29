@@ -2,6 +2,7 @@
 
 import {auth, unstable_update} from "@/auth";
 import { prisma } from "@/db";
+import { signOut } from "next-auth/react";
 import { revalidatePath } from "next/cache";
 
 export const setName = async (name: string) => {
@@ -83,4 +84,28 @@ export const getUserProfile = async (userId: string) => {
       role
     }))
   }
+}
+
+export const deleteUser = async (userId: string) => { 
+  try {
+    const result = await prisma.user.delete({
+      where: {id: userId}
+    })
+    console.log("ユーザー削除完了")
+    return {
+      success:true,
+      user: {
+        id: result.id,
+        name: result.name,
+        email: result.email
+      }
+    }
+  } catch (error) {
+    console.error("ユーザーの削除に失敗：", error);
+    return {
+      success: false,
+      error: error
+    }
+  }
+  
 }

@@ -5,22 +5,7 @@ import Link from "next/link";
 
 export default async function Home() {
   const session = await auth();
-  const userId = session?.user?.id;
-  // console.log(session);
-
-  if (!session?.user && userId) {
-    return (
-      <div className="flex flex-col rounded-md bg-neutral-100">
-        <p className="whitespace-pre-wrap break-all px-4 py-6">
-          No session data. Sign In first
-        </p>
-        <SignIn />
-      </div>
-    );
-  }
-
   const communityList = await getCommunityList();
-  // console.log(communityList);
 
   return (
     <div className="w-full flex flex-col gap-4 p-4 bg-neutral-100">
