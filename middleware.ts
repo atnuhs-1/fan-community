@@ -14,13 +14,14 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({
     req: request,
     secret: process.env.AUTH_SECRET as string,
-    cookieName: "authjs.session-token",
+    cookieName: process.env.TOKEN_COOKIE_NAME,
   });
 
   // console.log("token", token);
 
   if (token) {
     // ユーザーがサインイン済み
+    console.log("token.isProfileComplete: ", token.isProfileComplete);
     if (token.isProfileComplete === false) {
       // 名前を設定していない場合、set-nameにリダイレクト
       if (request.nextUrl.pathname !== "/auth/set-name") {
