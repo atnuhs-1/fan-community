@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
 
   if (token) {
     // ユーザーがサインイン済み
-    console.log("token.isProfileComplete: ", token.isProfileComplete);
+    // console.log("token.isProfileComplete: ", token.isProfileComplete);
     if (token.isProfileComplete === false) {
       // 名前を設定していない場合、set-nameにリダイレクト
       if (request.nextUrl.pathname !== "/auth/set-name") {

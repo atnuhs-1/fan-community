@@ -42,7 +42,7 @@ export default async function SideBar() {
   }
 
   return (
-    <aside className="w-64 border-r flex flex-col">
+    <aside className="w-64 border-r flex flex-col h-screen bg-white rounded-lg lg:fixed">
       <nav className="p-4 space-y-2 flex-grow">
         <div className="px-4 py-2">
           <Eye className="w-12 h-12" />
@@ -65,6 +65,15 @@ export default async function SideBar() {
             ))}
           </div>
         )}
+        {/* コミュニティ一覧 */}
+        {/* <h2 className="px-4 pt-4 pb-1 font-bold border-b">コミュニティ</h2>
+        {user_info?.communities && (
+          <div className="space-y-2">
+            {user_info?.communities.map((community) => (
+              <NavButton key={community.id} icon={<Bell />} label={community.name} href={`/community/${community.id}`} />
+            ))}
+          </div>
+        )} */}
       </nav>
 
       <div className="mt-auto p-4">

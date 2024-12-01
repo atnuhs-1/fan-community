@@ -17,6 +17,7 @@ type GetPostsResult = {
 type GetMembersResult = {
   success: boolean;
   members?: Member[];
+  communityName?: string;
   error?: string;
 };
 
@@ -33,6 +34,7 @@ export default async function CommunityPage({
 
   const postResult: GetPostsResult = await getPosts(communityId);
   const memberResult: GetMembersResult = await getCommunityMembers(communityId);
+  console.log("memberResult: ", memberResult);
 
   if(memberResult.members) {
     const communityUserId = memberResult.members.map(member => {
@@ -56,6 +58,7 @@ export default async function CommunityPage({
         initialPosts={postResult.posts}
         initialMembers={memberResult.members}
         communityId={communityId}
+        communityName={memberResult.communityName}
         isSignedIn={isSignedIn}
         isMember={isMember}
         image={session?.user.image}

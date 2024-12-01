@@ -38,9 +38,12 @@ export async function getCommunityMembers(communityId: string) {
   try {
     const members = await prisma.communityMember.findMany({
       where: { communityId },
-      include: { user: true },
+      include: {
+        user: true,
+        community: true,
+       },
     });
-    return { success: true, members };
+    return { success: true, members, communityName: members[0].community.name };
   } catch (error) {
     return { success: false, error: 'Failed to fetch community members' };
   }

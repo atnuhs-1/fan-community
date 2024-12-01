@@ -10,9 +10,68 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  // shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// システムユーザーの役割
+enum UserRole {
+  USER      // 一般ユーザー
+  ADMIN     // システム管理者（コミュニティ作成権限あり）
+}
+
+// コミュニティ内での役割
+enum CommunityRole {
+  MEMBER    // 一般メンバー
+  MODERATOR // モデレーター（コミュニティ管理者）
+  OWNER     // コミュニティオーナー
+}
+
+// 投稿タイプ
+enum PostType {
+  GENERAL      // 一般的な投稿
+  MERCH_STATUS // 物販状況の報告
+  LIVE_INFO     // ライブ情報に関する投稿
+}
+
+// 物販状況
+enum MerchandiseStatus {
+  IN_STOCK     // 在庫余裕あり
+  LOW_STOCK    // 残りわずか
+  SOLD_OUT     // 売り切れ
+}
+
+// 公演ステータス
+enum PerformanceStatus { // EventStatus から変更
+  SCHEDULED    // 開催予定
+  ONGOING      // 開催中
+  COMPLETED    // 終了
+  CANCELLED    // 中止
+}
+
+// イベントタイプを定義
+enum LiveType {
+  TOUR          // ツアー
+  SINGLE        // 単発ライブ
+  FESTIVAL      // フェス
+  STREAMING     // 配信ライブ
+  FAN_MEETING   // ファンミーティング
+  OTHER         // その他
+}
+
+// ユーザー管理
+model User {
+  id              String    @id @default(cuid())
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  image           String?
+  role            UserRole  @default(USER)
+  isProfileComplete Boolean @default(false)
+  accounts        Account[]
+  sessions        Session[]
+  posts           Post[]
+  communities     CommunityMember[]
 }
 
 model Account {
@@ -42,19 +101,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  isProfileComplete Boolean   @default(false)
-  accounts      Account[]
-  sessions      Session[]
-  posts         Post[]
-  communities   CommunityMember[]
-}
-
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -63,35 +109,75 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+// コミュニティ関連
 model Community {
   id          String    @id @default(cuid())
-  name        String
+  name        String    @unique
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   posts       Post[]
   members     CommunityMember[]
+  lives       Live[]
 }
 
 model CommunityMember {
-  id          String    @id @default(cuid())
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String        @id @default(cuid())
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  community   Community @relation(fields: [communityId], references: [id])
+  community   Community     @relation(fields: [communityId], references: [id])
   communityId String
-  role        String    @default("member") // e.g., "member", "moderator", "admin"
-  joinedAt    DateTime  @default(now())
+  role        CommunityRole @default(MEMBER)
+  joinedAt    DateTime      @default(now())
 
   @@unique([userId, communityId])
 }
 
+// 投稿関連
 model Post {
+  id                String    @id @default(cuid())
+  content           String
+  postType          PostType  @default(GENERAL)
+  merchandiseStatus MerchandiseStatus? // 物販状況を報告する場合のみ使用
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  author            User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId          String
+  community         Community @relation(fields: [communityId], references: [id])
+  communityId       String
+  images            Image[]
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  url       String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  createdAt DateTime @default(now())
+}
+
+model Live {
   id          String    @id @default(cuid())
-  content     String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String
+  title       String    // ライブタイトル
+  description String?
+  startDate   DateTime  // 開始日
+  endDate     DateTime? // 終了日（単発の場合は不要）
+  liveType    LiveType  // ライブの種類
   community   Community @relation(fields: [communityId], references: [id])
   communityId String
+  performances Performance[] // 個別公演
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Performance {
+  id          String      @id @default(cuid())
+  title       String?     // 個別公演タイトル（任意）
+  date        DateTime    // 公演日
+  venue       String      // 会場名
+  status      PerformanceStatus @default(SCHEDULED)
+  live        Live        @relation(fields: [liveId], references: [id])
+  liveId      String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }

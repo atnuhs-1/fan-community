@@ -14,6 +14,9 @@ import { Input } from "./ui/input";
 import { Skeleton } from "./ui/skeleton";
 import { joinCommunity } from "@/app/actions/community-members";
 import TimeLinePostForm from "./TimeLinePostForm";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type CreatePostResult = {
   success: boolean;
@@ -25,6 +28,7 @@ type ClientTimelineProps = {
   initialPosts: Post[];
   initialMembers: Member[];
   communityId: string;
+  communityName?: string;
   isSignedIn: boolean;
   isMember: boolean;
   image?: string | null;
@@ -34,6 +38,7 @@ export default function ClientTimeline({
   initialPosts,
   initialMembers,
   communityId,
+  communityName,
   isSignedIn,
   isMember,
   image,
@@ -77,11 +82,22 @@ export default function ClientTimeline({
 
   return (
     <>
-      <main className="flex-1 overflow-auto">
-        <header className="sticky top-0 bg-white border-b p-4">
-          <h1 className="text-xl font-bold">タイムライン</h1>
+      <main className="flex-1 overflow-auto min-h-screen">
+        <header className="sticky top-0 flex justify-between bg-white border-b p-2">
+          <h1 className="text-xl p-1 font-bold">タイムライン</h1>
+          <Link
+            href={`/community/${communityId}`}
+            className={cn(
+              "inline-flex items-center justify-center",
+              "text-xs font-medium p-2 border border-slate-700",
+              "hover:bg-slate-200 rounded-full",
+              "transition-colors"
+            )}
+          >
+            <span className="">コミュニティ詳細へ</span>
+          </Link>
         </header>
-        <div className="space-y-4">
+        <div className="bg-white">
           <TimeLinePostForm
             onSubmit={handleNewPost}
             image={image}
@@ -98,10 +114,8 @@ export default function ClientTimeline({
         </div>
       </main>
 
-      <aside className="w-80 border-l flex flex-col p-4">
-        <div
-          className={`space-y-4 ${isSignedIn && isJoined ? "" : ""}`}
-        >
+      <aside className="w-80 border-l flex flex-col p-4 bg-white">
+        <div className={`space-y-4 ${isSignedIn && isJoined ? "" : ""}`}>
           <CommunityMemberList members={members} />
           <JoinCommunityButton
             communityId={communityId}

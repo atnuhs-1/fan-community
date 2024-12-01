@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./db";
 import authConfig from "./auth.config";
+import { UserRole } from "@prisma/client";
 
 export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   ...authConfig,
@@ -20,6 +21,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
         console.log("profile: ", profile);
         token.name = user.name;
         token.isProfileComplete = user.isProfileComplete;
+        token.role = user.role;
       }
 
       // セッション更新時の処理
@@ -37,7 +39,8 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
         session.user.name = token.name as string;
         session.user.id = token.sub as string;
         // session.user.communityList = token.communityList;
-        session.user.isProfileComplete = token.isProfileComplete as boolean;
+        session.user.isProfileComplete = token.isProfileComplete;
+        session.user.role = token.role;
       }
       // console.log("token", token);
       // console.log("session", session);

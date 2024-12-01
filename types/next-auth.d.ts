@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import NextAuth, {type DefaultSession } from "next-auth"
 
 declare module "next-auth" {
@@ -9,6 +10,7 @@ declare module "next-auth" {
       id: string;
       communityList: string[];
       isProfileComplete: boolean;
+      role: UserRole;
       
     } & DefaultSession['user'];
   }
@@ -20,12 +22,20 @@ declare module "next-auth" {
     emailVerified: boolean;
     image: string;
     isProfileComplete: boolean;
+    role: UserRole;
   }
 }
 
+declare module "next-auth/jwt" {
+  interface JWT {
+    role: UserRole;
+    isProfileComplete: boolean;
+  }
+}
 
 declare module "@auth/core/adapters" {
   interface AdapterUser extends User {
     isProfileComplete: boolean;
+    role: UserRole;
   }
 }

@@ -20,7 +20,7 @@ export default async function Home() {
             <li key={community.id}>
               <Link
                 className="block p-4 rounded-lg bg-white shadow-lg"
-                href={`/timeline/${community.id}`}
+                href={`/community/${community.id}`}
               >
                 {community.name}
               </Link>
