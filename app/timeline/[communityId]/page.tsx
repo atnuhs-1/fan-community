@@ -5,8 +5,6 @@ import ClientTimeline from "@/components/ClientTimeline";
 import { Post } from "@/types/post";
 import { Member } from "@/types/community";
 import { getCommunityMembers } from "@/app/actions/community-members";
-import SideBar from "@/components/sidebar";
-import { prisma } from "@/db";
 
 type GetPostsResult = {
   success: boolean;

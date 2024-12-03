@@ -82,7 +82,7 @@ export default function ClientTimeline({
 
   return (
     <>
-      <main className="flex-1 overflow-auto min-h-screen">
+      <main className="flex-1 overflow-auto min-h-screen rounded-lg">
         <header className="sticky top-0 flex justify-between bg-white border-b p-2">
           <h1 className="text-xl p-1 font-bold">タイムライン</h1>
           <Link

@@ -53,7 +53,7 @@ export default async function Page({
     getLivesList(communityId)
   ]);
   return (
-    <div className="w-full h-full m-8 rounded-lg shadow-lg bg-white">
+    <div className="w-full h-full rounded-lg shadow-lg bg-white">
       <div className="p-6 space-y-6">
         <h1 className="font-bold text-3xl">{community.name}</h1>
         <p className="text-slate-700">{community.description}</p>

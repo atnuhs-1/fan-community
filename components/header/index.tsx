@@ -1,0 +1,37 @@
+// components/header.tsx
+import { Logo } from "./logo";
+import { ActionButtons } from "./action-button";
+import { SearchInput } from "./search-input";
+
+export default function Header() {
+  return (
+    <>
+      {/* デスクトップヘッダー */}
+      <header className="fixed z-20 hidden w-full lg:block">
+        <div className="h-16 border-b bg-white">
+          <div className="mx-auto h-full max-w-screen-xl px-4">
+            <div className="flex h-full items-center justify-between">
+              <div className="flex items-center gap-8">
+                <Logo />
+                <SearchInput />
+              </div>
+              <ActionButtons />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* モバイルヘッダー */}
+      <header className="fixed z-20 w-full lg:hidden">
+        <div className="h-16 border-b bg-white">
+          <div className="mx-auto h-full px-4">
+            <div className="flex h-full items-center justify-between">
+              <Logo />
+              <ActionButtons />
+            </div>
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}

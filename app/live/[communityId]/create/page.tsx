@@ -68,7 +68,7 @@ export default function LiveForm({
   const performances = fields.performances.getFieldList();
 
   return (
-    <div className="w-full h-full p-6 m-8 bg-white rounded-lg shadow-md">
+    <div className="w-full h-full p-6  bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6">ライブ情報登録</h1>
 
       <form
