@@ -5,7 +5,7 @@ import Navigation from "./navigation";
 
 export default async function SideBar() {
   return (
-    <aside className="flex flex-col bg-white rounded-lg">
+    <aside className="sticky top-[calc(60px+24px)] h-[calc(100dvh-60px-24px-16px)] overflow-y-auto overflow-x-hidden flex flex-col bg-white rounded-lg">
       <nav className="p-4 space-y-2 ">
         <Navigation />
 

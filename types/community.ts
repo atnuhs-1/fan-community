@@ -11,3 +11,10 @@ export type Member = {
     image: string | null;
   };
 };
+
+export interface CommunityWithMeta {
+  id: string;
+  name: string;
+  description: string | null;
+  updatedAt: Date;
+}
