@@ -7,31 +7,39 @@ interface CommunityListProps {
   title?: string;
 }
 
-export default async function CommunityList({ title = "コミュニティ" }: CommunityListProps) {
+export default async function CommunityList({
+  title = "コミュニティ",
+}: CommunityListProps) {
   const communityList = await getCommunityList();
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-2xl">{title}</h2>
-        <Link href="/community/create">
-          <Button>
-            新規作成
-          </Button>
+    <div className="">
+      <div className="flex flex-row items-center gap-8 ps-8 pt-4 pb-1 pe-8">
+        <h2 className="flex w-full overflow-hidden font-semibold text-2xl">
+          {title}
+        </h2>
+        <Link href="/community/create" className="flex">
+          <Button className="py-1" size="sm">新規作成</Button>
         </Link>
       </div>
 
       {communityList.length === 0 ? (
         <div className="text-center py-12 bg-muted/50 rounded-lg">
-          <p className="text-muted-foreground">コミュニティがまだ作成されていません</p>
+          <p className="text-muted-foreground">
+            コミュニティがまだ作成されていません
+          </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {communityList.map((community) => (
-            <Link key={community.id} href={`/community/${community.id}`}>
-              <CommunityCard community={community} />
-            </Link>
-          ))}
+        <div className="overflow-y-hidden overflow-x-scroll hide-scrollbar px-8 py-2 pb-5 pt-1">
+          <ul className="flex w-fit flex-row">
+            {communityList.map((community) => (
+              <li key={community.id} className="mr-4 lg:mr-5">
+                <Link href={`/community/${community.id}`}>
+                  <CommunityCard community={community} />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>

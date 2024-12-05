@@ -8,14 +8,15 @@ export default function Header() {
     <>
       {/* デスクトップヘッダー */}
       <header className="fixed z-20 hidden w-full lg:block">
-        <div className="h-16 border-b bg-white">
+        <div className="h-[60px] border-b bg-white">
           <div className="mx-auto h-full max-w-screen-xl px-4">
             <div className="flex h-full items-center justify-between">
               <div className="flex items-center gap-8">
-                <Logo />
-                <SearchInput />
+                {/* <Logo /> */}
+                <h1 className="font-bold font-serif text-2xl">FanSync</h1>
+                {/* <SearchInput /> */}
               </div>
-              <ActionButtons />
+              {/* <ActionButtons /> */}
             </div>
           </div>
         </div>
@@ -23,7 +24,7 @@ export default function Header() {
 
       {/* モバイルヘッダー */}
       <header className="fixed z-20 w-full lg:hidden">
-        <div className="h-16 border-b bg-white">
+        <div className="h-[48px] border-b bg-white">
           <div className="mx-auto h-full px-4">
             <div className="flex h-full items-center justify-between">
               <Logo />

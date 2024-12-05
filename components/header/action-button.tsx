@@ -16,7 +16,7 @@ export function ActionButtons() {
         </Button>
       </Link>
       <Link href="/post">
-        <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+        <Button className="bg-slate-900 hover:bg-orange-600 text-white">
           投稿する
         </Button>
       </Link>

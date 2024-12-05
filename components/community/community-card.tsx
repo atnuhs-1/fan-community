@@ -1,8 +1,4 @@
-import { formatDistanceToNow } from "date-fns";
-import { ja } from "date-fns/locale";
 import { Users, MessageSquare, ArrowRight } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { CommunityWithMeta } from "@/types/community";
 
 interface CommunityCardProps {
@@ -11,36 +7,32 @@ interface CommunityCardProps {
 
 export function CommunityCard({ community }: CommunityCardProps) {
   return (
-    <Card className="group hover:shadow-lg transition-shadow">
-      <CardHeader className="h-[104px]">
-        <CardTitle className="line-clamp-1">{community.name}</CardTitle>
-        {community.description && (
-          <CardDescription className="line-clamp-2">
-            {community.description}
-          </CardDescription>
-        )}
-      </CardHeader>
-      <CardContent>
-        <div className="flex gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Users className="w-4 h-4" />
-            {/* <span>{community._count.members}メンバー</span> */}
+    <div
+      className="group overflow-hidden rounded-lg"
+      style={{ width: "210px" }}
+    >
+      <div className="overflow-hidden rounded-lg bg-gray-200 aspect-video">
+        <div className=""></div>
+      </div>
+      <div className="flex flex-col justify-start rounded-b-lg gap-2 p-2">
+        <h6 className="line-clamp-1 min-h-10 font-semibold group-hover:text-blue-500">
+          {community.name}
+        </h6>
+        <div className="flex justify-between">
+          <div className="flex gap-4">
+            <div className="flex gap-2 text-sm text-muted-foreground group-hover:text-blue-500">
+              <Users className="w-4 h-4" />
+            </div>
+            <div className="flex gap-2 text-sm text-muted-foreground group-hover:text-blue-500">
+              <MessageSquare className="w-4 h-4" />
+            </div>
           </div>
-          <div className="flex items-center gap-1">
-            <MessageSquare className="w-4 h-4" />
-            {/* <span>{community._count.posts}投稿</span> */}
+
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+            <ArrowRight className="w-4 h-4" />
           </div>
         </div>
-      </CardContent>
-      <CardFooter className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          {/* 最終更新: {formatDistanceToNow(new Date(community.updatedAt), { locale: ja, addSuffix: true })} */}
-        </span>
-        <Button variant="ghost" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
-          詳細を見る
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }

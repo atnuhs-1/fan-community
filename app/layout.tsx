@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex bg-neutral-100`}
       >
-        <div className="h-full">
+        <div className="w-full h-full">
           <Header />
           <div className="h-full lg:pt-[60px] pt-[48px]">
             <div className="z-0 mx-auto h-full max-w-screen-xl lg:gap-[16px] lg:p-[24px] lg:grid lg:grid-cols-12">

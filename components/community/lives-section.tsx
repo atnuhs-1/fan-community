@@ -8,10 +8,10 @@ export async function LivesSection({ communityId }: { communityId: string }) {
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">ライブ情報</h2>
+        <h2 className="text-xl font-bold">ライブ情報</h2>
         <Link
           href={`/live/${communityId}/create`}
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          className="flex items-center gap-2 bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700"
         >
           <PlusCircle className="w-5 h-5" />
           新規ツアー作成
