@@ -3,9 +3,9 @@ import { Home, Hash, MessageCircle, Store, User } from "lucide-react";
 
 const footerNavigation = [
   { icon: Home, label: "ホーム", href: "/" },
-  { icon: Hash, label: "タイムライン", href: "/timeline" },
-  { icon: MessageCircle, label: "メッセージ", href: "/messages" },
-  { icon: Store, label: "ストア", href: "/store" },
+  { icon: Hash, label: "タイムライン", href: "/community/cm202aic000033hhcts6nvhns/timeline" },
+  // { icon: MessageCircle, label: "メッセージ", href: "/messages" },
+  // { icon: Store, label: "ストア", href: "/store" },
   { icon: User, label: "マイページ", href: "/profile" },
 ];
 

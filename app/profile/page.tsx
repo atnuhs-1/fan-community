@@ -6,12 +6,13 @@ import { prisma } from "@/db";
 import PostItem from "@/components/PostItem";
 import { getUserProfile } from "../actions/profile";
 import EditProfile from "@/components/EditProfile";
+import { redirect } from "next/navigation";
 
 
 export default async function ProfilePage() {
   const session = await auth();
   if (!session) {
-    return <div>サインインして</div>;
+    redirect("/signin");
   }
   const user_info = await getUserProfile(session?.user.id);
 

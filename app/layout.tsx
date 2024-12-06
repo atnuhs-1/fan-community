@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/header/index";
 import SideBar from "@/components/sidebar/index";
 import { Suspense } from "react";
+import Footer from "@/components/footer";
+import FooterNav from "@/components/footer-nav";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -48,6 +50,10 @@ export default function RootLayout({
               <main className="h-full lg:col-span-8 xl:col-span-9">
                 {children}
               </main>
+              
+              <div className="fixed bottom-0 z-20 w-full shrink-0 lg:hidden">
+                <FooterNav />
+              </div>
             </div>
           </div>
         </div>

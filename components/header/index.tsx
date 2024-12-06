@@ -2,6 +2,7 @@
 import { Logo } from "./logo";
 import { ActionButtons } from "./action-button";
 import { SearchInput } from "./search-input";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -13,7 +14,10 @@ export default function Header() {
             <div className="flex h-full items-center justify-between">
               <div className="flex items-center gap-8">
                 {/* <Logo /> */}
-                <h1 className="font-bold font-serif text-2xl">FanSync</h1>
+                <Link href="/">
+                  <h1 className="font-bold font-serif text-2xl">FanSync</h1>
+                </Link>
+
                 {/* <SearchInput /> */}
               </div>
               {/* <ActionButtons /> */}
@@ -28,7 +32,9 @@ export default function Header() {
           <div className="mx-auto h-full px-4">
             <div className="flex h-full items-center justify-between">
               {/* <Logo /> */}
-              <h1 className="font-bold font-serif text-2xl">FanSync</h1>
+              <Link href="/">
+                <h1 className="font-bold font-serif text-2xl">FanSync</h1>
+              </Link>
               {/* <ActionButtons /> */}
             </div>
           </div>

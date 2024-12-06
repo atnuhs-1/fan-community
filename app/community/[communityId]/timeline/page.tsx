@@ -1,5 +1,6 @@
 import { prisma } from "@/db";
 import { Timeline } from "@/components/timeline/Timeline";
+import { SessionProvider } from "next-auth/react";
 
 interface TimelinePageProps {
   params: { communityId: string };
@@ -9,9 +10,9 @@ interface TimelinePageProps {
   };
 }
 
-export default async function TimelinePage({ 
-  params: { communityId }, 
-  searchParams: { liveId, performanceId } 
+export default async function TimelinePage({
+  params: { communityId },
+  searchParams: { liveId, performanceId },
 }: TimelinePageProps) {
   // ライブ情報の取得
   const lives = await prisma.live.findMany({
@@ -24,10 +25,10 @@ export default async function TimelinePage({
           id: true,
           title: true,
           date: true,
-          venue: true
-        }
-      }
-    }
+          venue: true,
+        },
+      },
+    },
   });
 
   // 投稿の取得
@@ -47,19 +48,19 @@ export default async function TimelinePage({
           id: true,
           name: true,
           image: true,
-        }
+        },
       },
       images: {
         select: {
           id: true,
           url: true,
-        }
+        },
       },
       live: {
         select: {
           id: true,
           title: true,
-        }
+        },
       },
       performance: {
         select: {
@@ -67,23 +68,25 @@ export default async function TimelinePage({
           title: true,
           date: true,
           venue: true,
-        }
-      }
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
-    }
+    },
   });
 
   return (
     <div className="w-full h-full rounded-lg shadow-lg bg-white">
-      <Timeline 
-        communityId={communityId}
-        liveId={liveId}
-        performanceId={performanceId}
-        posts={posts}
-        lives={lives}
-      />
+      <SessionProvider>
+        <Timeline
+          communityId={communityId}
+          liveId={liveId}
+          performanceId={performanceId}
+          posts={posts}
+          lives={lives}
+        />
+      </SessionProvider>
     </div>
   );
 }

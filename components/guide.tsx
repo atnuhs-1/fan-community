@@ -21,7 +21,7 @@ export default function Guide() {
             </p>
           </Link>
 
-          <Link
+          {/* <Link
             href="/communities"
             className="flex flex-col items-center text-center p-4 bg-white rounded-lg transition-all hover:shadow-md cursor-pointer"
           >
@@ -32,16 +32,16 @@ export default function Guide() {
             <p className="text-sm text-gray-600">
               応援しているアーティストのコミュニティを見つけて参加
             </p>
-          </Link>
+          </Link> */}
 
           <Link
-            href="/communities"
+            href="/community/cm202aic000033hhcts6nvhns/timeline"
             className="flex flex-col items-center text-center p-4 bg-white rounded-lg transition-all hover:shadow-md cursor-pointer"
           >
             <div className="bg-blue-50 p-3 rounded-full mb-4">
               <PenSquare className="w-6 h-6 text-blue-600" />
             </div>
-            <h3 className="font-semibold mb-2">3. 情報を共有</h3>
+            <h3 className="font-semibold mb-2">2. 情報を共有</h3>
             <p className="text-sm text-gray-600">
               ライブ情報や物販情報をみんなで共有しよう
             </p>

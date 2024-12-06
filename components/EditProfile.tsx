@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { deleteUser } from "@/app/actions/profile";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { revalidatePath } from "next/cache";
 
 type EditProfileProps = {
   userId: string;
@@ -26,6 +27,7 @@ export default function EditProfile({userId}: EditProfileProps) {
   const handleDelete = async () => { 
     try {
       signOut({redirect: false}); //redirect:false有りだったら/にリダイレクトされたけど、画面上のユーザー情報が更新されずにアイコンとかが残ったまま。リロードしたら消える
+      revalidatePath("/")
       const result = await deleteUser(userId);
       await router.push("/");
     } catch (error) {
