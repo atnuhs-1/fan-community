@@ -5,6 +5,7 @@ import { CommunityHeader } from "@/components/community/community-header";
 import { TimelineSection } from "@/components/community/timeline-posts";
 import { LivesSection } from "@/components/community/lives-section";
 import { Skeleton } from "@/components/ui/skeleton";
+import TimelineNavigationList from "@/components/community/timeline-list";
 
 function LivesSkeleton() {
   return (
@@ -36,6 +37,7 @@ export default async function Page({
         name={community.name}
         description={community.description}
       />
+      <TimelineNavigationList communityId={params.communityId} />
       <TimelineSection communityId={communityId} />
       <Suspense fallback={<LivesSkeleton />}>
         <LivesSection communityId={communityId} />

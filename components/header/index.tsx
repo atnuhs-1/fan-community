@@ -27,8 +27,9 @@ export default function Header() {
         <div className="h-[48px] border-b bg-white">
           <div className="mx-auto h-full px-4">
             <div className="flex h-full items-center justify-between">
-              <Logo />
-              <ActionButtons />
+              {/* <Logo /> */}
+              <h1 className="font-bold font-serif text-2xl">FanSync</h1>
+              {/* <ActionButtons /> */}
             </div>
           </div>
         </div>

@@ -74,13 +74,13 @@ export function TimelineSection({ communityId }: { communityId: string }) {
     <div className="p-6 space-y-4">
       <div className="flex justify-between">
         <h2 className="font-semibold text-xl">タイムライン</h2>
-        <Link href={`/timeline/${communityId}`} className="flex items-center gap-2 bg-slate-800 text-white px-2 py-1 rounded-lg hover:bg-blue-700">
+        <Link href={`community/${communityId}/timeline`} className="flex items-center gap-2 bg-slate-800 text-white px-2 py-1 rounded-lg hover:bg-blue-700">
           <SquareChartGantt  className="w-5 h-5"/>
           タイムラインへ
         </Link>
       </div>
 
-      <div className="h-[300px] overflow-y-auto shadow-inner rounded-lg bg-gray-50 p-1">
+      <div className="h-[300px] overflow-y-auto shadow-inner rounded-lg bg-gray-50 mx-8 p-1">
         <Suspense fallback={<PostsSkeleton />}>
           <Posts communityId={communityId} />
         </Suspense>

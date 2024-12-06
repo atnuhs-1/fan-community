@@ -61,10 +61,10 @@ export default function ClientTimeline({
 
   const handleNewPost = async (content: string) => {
     try {
-      const result = await createPost(content, communityId);
-      if (result.success && result.post) {
-        setPosts((prevPosts) => [result.post, ...prevPosts]);
-      }
+      // const result = await createPost(content, communityId);
+      // if (result.success && result.post) {
+      //   setPosts((prevPosts) => [result.post, ...prevPosts]);
+      // }
     } catch (error) {
       console.log(error);
     }

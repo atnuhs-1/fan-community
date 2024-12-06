@@ -146,6 +146,11 @@ model Post {
   community         Community @relation(fields: [communityId], references: [id])
   communityId       String
   images            Image[]
+
+  live            Live?     @relation(fields: [liveId], references: [id])
+  liveId          String?
+  performance     Performance? @relation(fields: [performanceId], references: [id])
+  performanceId   String?
 }
 
 model Image {
@@ -168,6 +173,8 @@ model Live {
   performances Performance[] // 個別公演
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  posts       Post[]
 }
 
 model Performance {
@@ -180,4 +187,6 @@ model Performance {
   liveId      String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  posts       Post[]   
 }

@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-component";
 import { getPosts } from "@/app/actions/posts";
-import ClientTimeline from "@/components/ClientTimeline";
+// import ClientTimeline from "@/components/ClientTimeline";
 import { Post } from "@/types/post";
 import { Member } from "@/types/community";
 import { getCommunityMembers } from "@/app/actions/community-members";
@@ -52,7 +52,7 @@ export default async function CommunityPage({
 
   return (
     <>
-      <ClientTimeline
+      {/* <ClientTimeline
         initialPosts={postResult.posts}
         initialMembers={memberResult.members}
         communityId={communityId}
@@ -60,7 +60,7 @@ export default async function CommunityPage({
         isSignedIn={isSignedIn}
         isMember={isMember}
         image={session?.user.image}
-      />
+      /> */}
     </>
   );
 }
