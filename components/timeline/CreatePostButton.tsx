@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { useCreatePost } from "./useCreatePost"; // 後で実装
+import { useCreatePost } from "./useCreatePost";
 import { useSession } from "next-auth/react";
 
 

@@ -1,25 +1,22 @@
-## コミュニティプラットフォーム（アプリ名未定、開発中）
+## FanSync
 
-#### アプリのリンク
+#### リンク
 https://fan-community.vercel.app/
 
 アプリ画面
 
+<img width="700" alt="あ" src="./docs/images/home.png">
 <img width="700" alt="あ" src="./docs/images/timeline.png">
-
-##### 進捗
-- コミュニティごとのタイムライン実装
 
 ### 概要
 
-- ファンコミュニティごとにタイムラインを分けたSNS
-- ノイズ（関係ない話）が交じることのないタイムラインで、アーティストの話をファン同士でシェアできる
-- リアルタイムでファン同士が情報をシェアできるプラットフォーム
+- ファン同士がライブ・イベント情報をリアルタイムに共有できるプラットフォーム
+- アーティストごとのコミュニティで、より充実したファン体験を実現
 - Spotify連携による音楽体験の強化と共有
 
-### 実装したい機能
-1. **コミュニティ別タイムライン**
-    - X（旧Twitter）ライクなインターフェースで各コミュニティの最新情報を表示
+### 実装予定の機能
+1. **コミュニティ・ライブ別タイムライン**
+    - コミュニティに関する情報やライブ・公演の情報を投稿するタイムライン
 2. **ライブイベント情報ハブ**
     - 会場アクセス情報
     - グッズ販売状況のリアルタイム更新
@@ -37,7 +34,7 @@ https://fan-community.vercel.app/
 6. **アーティスト情報データベース**
     - Wikipediaのように誰でも編集できる
 
-### 技術
+### 技術スタック
 - Next.js 14.2
 - 認証
     - Next-auth 5.0.0-beta.21
@@ -48,19 +45,21 @@ https://fan-community.vercel.app/
 - デプロイ先
     - Vercel
 
-### ER図
+### DB
 ```mermaid
 erDiagram
     User ||--o{ Account : has
     User ||--o{ Session : has
-    User ||--o{ Post : creates
-    User ||--o{ CommunityMember : belongs_to
+    User ||--o{ Post : writes
+    User ||--o{ CommunityMember : has
 
-    Community ||--o{ Post : contains
     Community ||--o{ CommunityMember : has
+    Community ||--o{ Post : contains
+    Community ||--o{ Live : has
 
-    CommunityMember }o--|| Community : belongs_to
-    CommunityMember }o--|| User : is
+    Post ||--o{ Image : has
+    
+    Live ||--o{ Performance : has
 
     User {
         string id PK
@@ -68,6 +67,8 @@ erDiagram
         string email UK
         datetime emailVerified
         string image
+        enum role
+        boolean isProfileComplete
     }
 
     Account {
@@ -92,15 +93,9 @@ erDiagram
         datetime expires
     }
 
-    VerificationToken {
-        string identifier
-        string token UK
-        datetime expires
-    }
-
     Community {
         string id PK
-        string name
+        string name UK
         string description
         datetime createdAt
         datetime updatedAt
@@ -110,17 +105,55 @@ erDiagram
         string id PK
         string userId FK
         string communityId FK
-        string role
+        enum role
         datetime joinedAt
     }
 
     Post {
         string id PK
         string content
+        enum postType
+        enum merchandiseStatus
         datetime createdAt
         datetime updatedAt
         string authorId FK
         string communityId FK
+    }
+
+    Image {
+        string id PK
+        string url
+        string postId FK
+        datetime createdAt
+    }
+
+    Live {
+        string id PK
+        string title
+        string description
+        datetime startDate
+        datetime endDate
+        enum liveType
+        string communityId FK
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Performance {
+        string id PK
+        string title
+        datetime date
+        string venue
+        enum status
+        string liveId FK
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    VerificationToken {
+        string identifier
+        string token UK
+        datetime expires
     }
 ```
 

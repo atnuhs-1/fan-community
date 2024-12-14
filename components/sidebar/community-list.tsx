@@ -18,7 +18,7 @@ export default async function CommunityList() {
           key={community.id} 
           icon={<Bell />} 
           label={community.name} 
-          href={`community/${community.id}/timeline`} 
+          href={`/community/${community.id}/timeline`} 
         />
       ))}
       {/* コミュニティ一覧 */}

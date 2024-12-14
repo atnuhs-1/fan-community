@@ -1,16 +1,11 @@
 import {
-  Post,
-  User,
   Image as PrismaImage,
-  Live,
-  Performance,
   PostType,
 } from "@prisma/client";
 import { User as UserIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ja } from "date-fns/locale";
-import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { TimelinePostImage } from "./TImelinePostImage";
 
 interface TimelinePostProps {
   post: {
@@ -62,13 +57,7 @@ export function TimelinePost({ post }: TimelinePostProps) {
     }
   };
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const badge = getPostTypeBadge();
-
-  // 画像クリック時のハンドラー
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
-  };
 
   return (
     <div className="p-4">
@@ -120,39 +109,10 @@ export function TimelinePost({ post }: TimelinePostProps) {
           {/* 投稿本文 */}
           <p className="mt-2 text-gray-800">{post.content}</p>
 
-          {/* 画像表示 */}
+          {/* 画像部分のみをクライアントコンポーネントとして切り出し */}
           {post.images.length > 0 && (
-            <div className="mt-2 grid gap-2 grid-cols-2">
-              {post.images.map((image) => (
-                <img
-                  key={image.id}
-                  src={image.url}
-                  alt=""
-                  className="rounded-lg w-full h-auto cursor-pointer"
-                  onClick={() => handleImageClick(image.url)}
-                />
-              ))}
-            </div>
+            <TimelinePostImage images={post.images} />
           )}
-
-          {/* 画像モーダル */}
-          <Dialog
-            open={!!selectedImage}
-            onOpenChange={() => setSelectedImage(null)}
-          >
-            <DialogContent className="max-w-[90vw] max-h-[90vh] p-0">
-              {selectedImage && (
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <img
-                    src={selectedImage}
-                    alt=""
-                    className="max-w-full max-h-[90vh] object-contain"
-                    onClick={() => setSelectedImage(null)}
-                  />
-                </div>
-              )}
-            </DialogContent>
-          </Dialog>
         </div>
       </div>
     </div>
