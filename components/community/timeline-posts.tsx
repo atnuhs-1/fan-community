@@ -71,10 +71,10 @@ async function Posts({ communityId }: { communityId: string }) {
 
 export function TimelineSection({ communityId }: { communityId: string }) {
   return (
-    <div className="p-6 space-y-4">
-      <div className="flex justify-between">
+    <div className="space-y-4">
+      <div className="flex justify-between px-8">
         <h2 className="font-semibold text-xl">タイムライン</h2>
-        <Link href={`community/${communityId}/timeline`} className="flex items-center gap-2 bg-slate-800 text-white px-2 py-1 rounded-lg hover:bg-blue-700">
+        <Link href={`/community/${communityId}/timeline`} className="flex items-center gap-2 bg-slate-800 text-white px-2 py-1 rounded-lg hover:bg-blue-700">
           <SquareChartGantt  className="w-5 h-5"/>
           タイムラインへ
         </Link>

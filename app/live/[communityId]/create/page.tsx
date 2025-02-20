@@ -95,7 +95,7 @@ export default function LiveForm({
               <option value="">選択してください</option>
               {Object.entries(LiveType).map(([key, value]) => (
                 <option key={key} value={value}>
-                  {getLiveTypeLabel(value)} {/* 後述する関数 */}
+                  {getLiveTypeLabel(value)}
                 </option>
               ))}
             </select>

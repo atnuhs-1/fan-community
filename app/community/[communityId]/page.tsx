@@ -30,6 +30,7 @@ export default async function Page({
 }) {
   const { communityId } = params;
   const community = await fetchCommunityInfo(communityId);
+  const liveList = await getLivesList(communityId);
 
   return (
     <div className="w-full h-full rounded-lg shadow-lg bg-white">
@@ -37,7 +38,7 @@ export default async function Page({
         name={community.name}
         description={community.description}
       />
-      <TimelineNavigationList communityId={params.communityId} />
+      <TimelineNavigationList communityId={params.communityId} liveList={liveList}/>
       <TimelineSection communityId={communityId} />
       <Suspense fallback={<LivesSkeleton />}>
         <LivesSection communityId={communityId} />

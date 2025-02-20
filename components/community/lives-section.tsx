@@ -6,9 +6,9 @@ import { getLivesList } from "@/app/lib/live/data";
 export async function LivesSection({ communityId }: { communityId: string }) {
   const lives = await getLivesList(communityId);
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-8">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold">ライブ情報</h2>
+        <h2 className="text-xl font-semibold">ライブ情報</h2>
         <Link
           href={`/live/${communityId}/create`}
           className="flex items-center gap-2 bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700"
