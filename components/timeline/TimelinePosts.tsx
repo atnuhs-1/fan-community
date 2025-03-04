@@ -11,7 +11,7 @@ export default async function TimelinePosts({
   liveId?: string;
   performanceId?: string;
 }) {
-  
+  const startTime = Date.now();
   noStore();
 
   const posts = await prisma.post.findMany({
@@ -57,6 +57,11 @@ export default async function TimelinePosts({
       createdAt: "desc",
     },
   });
+
+  const endTime = Date.now();
+  console.log(
+    `データ取得時間: ${endTime - startTime}ms, 投稿数: ${posts.length}`
+  );
 
   return (
     <div className="divide-y">
